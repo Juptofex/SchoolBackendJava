@@ -1,14 +1,10 @@
 package be.vinci.cae.fiche1.controller;
 
-
 import be.vinci.cae.fiche1.models.Quote;
 import be.vinci.cae.fiche1.service.QuotesService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/quotes")
