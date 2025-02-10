@@ -1,7 +1,7 @@
-import { useState, SyntheticEvent } from "react";
+import { useState, SyntheticEvent } from 'react';
 
-import { NewPizza } from "../../types";
-import { Box, Button, TextField, useTheme } from "@mui/material";
+import { NewPizza } from '../../types';
+import { Box, Button, TextField, useTheme } from '@mui/material';
 
 interface AddPizzaProps {
   addPizza: (pizza: NewPizza) => void;
@@ -9,8 +9,8 @@ interface AddPizzaProps {
 
 const AddPizza = ({ addPizza }: AddPizzaProps) => {
   const theme = useTheme();
-  const [pizza, setPizza] = useState("");
-  const [description, setDescription] = useState("");
+  const [pizza, setPizza] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -19,13 +19,13 @@ const AddPizza = ({ addPizza }: AddPizzaProps) => {
 
   const handlePizzaChange = (e: SyntheticEvent) => {
     const pizzaInput = e.target as HTMLInputElement;
-    console.log("change in pizzaInput:", pizzaInput.value);
+    console.log('change in pizzaInput:', pizzaInput.value);
     setPizza(pizzaInput.value);
   };
 
   const handleDescriptionChange = (e: SyntheticEvent) => {
     const descriptionInput = e.target as HTMLInputElement;
-    console.log("change in descriptionInput:", descriptionInput.value);
+    console.log('change in descriptionInput:', descriptionInput.value);
     setDescription(descriptionInput.value);
   };
 
@@ -34,7 +34,7 @@ const AddPizza = ({ addPizza }: AddPizzaProps) => {
       sx={{
         marginTop: 2,
         padding: 3,
-        backgroundColor: "secondary.light",
+        backgroundColor: 'secondary.light',
         borderRadius: 4,
         boxShadow: 2,
       }}

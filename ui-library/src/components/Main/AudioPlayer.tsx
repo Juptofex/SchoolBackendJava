@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 interface AudioPlayerProps {
   sound: string;
@@ -18,12 +18,12 @@ const AudioPlayer = ({
     const audioElement = audioRef.current;
 
     if (audioElement && actionToBePerformed) {
-      console.log("actionToBePerformed", actionToBePerformed);
+      console.log('actionToBePerformed', actionToBePerformed);
       if (audioElement.paused) audioElement.play();
       else audioElement.pause();
       clearActionToBePerformed();
     }
-  }, [actionToBePerformed]);
+  }, [actionToBePerformed, clearActionToBePerformed]);
 
   return (
     <div>
@@ -37,7 +37,7 @@ const AudioPlayer = ({
         <source src={sound} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
-      <p>{isPlaying ? "Playing" : "Paused"}</p>
+      <p>{isPlaying ? 'Playing' : 'Paused'}</p>
     </div>
   );
 };

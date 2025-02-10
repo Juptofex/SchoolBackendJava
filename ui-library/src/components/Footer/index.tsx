@@ -1,6 +1,6 @@
-import { Box, Container, Typography, useTheme } from "@mui/material";
-import logo from "../../assets/images/js-logo.png";
-import { Copyright } from "@mui/icons-material";
+import { Box, Container, Typography, useTheme } from '@mui/material';
+import logo from '../../assets/images/js-logo.png';
+import { Copyright } from '@mui/icons-material';
 
 const Footer = () => {
   const theme = useTheme();
@@ -11,7 +11,7 @@ const Footer = () => {
       sx={{
         py: 3,
         backgroundColor:
-          theme.palette.mode === "light"
+          theme.palette.mode === 'light'
             ? theme.palette.secondary.light
             : theme.palette.secondary.dark,
       }}
@@ -19,7 +19,7 @@ const Footer = () => {
       <Container maxWidth="sm">
         <Box
           sx={{
-            display: "inline-block",
+            display: 'inline-block',
             paddingRight: 2,
             color: theme.palette.secondary.contrastText,
           }}
@@ -30,7 +30,7 @@ const Footer = () => {
             myAmazingPizzeria
           </Typography>
         </Box>
-        <Box sx={{ display: "inline-block" }}>
+        <Box sx={{ display: 'inline-block' }}>
           <img src={logo} alt="" width={50} />
         </Box>
       </Container>

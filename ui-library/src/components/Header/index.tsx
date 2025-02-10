@@ -1,5 +1,5 @@
-import { Box, Container, Typography, useTheme } from "@mui/material";
-import { useState } from "react";
+import { Box, Container, Typography, useTheme } from '@mui/material';
+import { useState } from 'react';
 
 interface HeaderProps {
   title: string;
@@ -23,7 +23,7 @@ const Header = ({ title, handleHeaderClick }: HeaderProps) => {
       sx={{
         px: 2,
         backgroundColor:
-          theme.palette.mode === "light"
+          theme.palette.mode === 'light'
             ? theme.palette.primary.light
             : theme.palette.primary.dark,
         color: (theme) => theme.palette.primary.contrastText,

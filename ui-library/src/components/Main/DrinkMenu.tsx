@@ -6,8 +6,8 @@ import {
   Typography,
   Grid2,
   useTheme,
-} from "@mui/material";
-import { Drink } from "../../types";
+} from '@mui/material';
+import { Drink } from '../../types';
 
 interface DrinkMenuProps {
   title: string;
@@ -23,7 +23,7 @@ const DrinkMenu = ({ title, drinks }: DrinkMenuProps) => {
         gutterBottom
         sx={{
           color: theme.palette.primary.contrastText,
-          textAlign: "center",
+          textAlign: 'center',
           marginTop: 2,
         }}
       >
@@ -37,7 +37,7 @@ const DrinkMenu = ({ title, drinks }: DrinkMenuProps) => {
                 component="img"
                 image={drink.image}
                 alt={drink.title}
-                style={{ objectFit: "contain", height: "200px" }} // Ensure image is fully visible
+                style={{ objectFit: 'contain', height: '200px' }} // Ensure image is fully visible
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

@@ -4,7 +4,7 @@ interface Pizza {
   content: string;
 }
 
-type NewPizza = Omit<Pizza, "id">;
+type NewPizza = Omit<Pizza, 'id'>;
 
 interface Drink {
   title: string;

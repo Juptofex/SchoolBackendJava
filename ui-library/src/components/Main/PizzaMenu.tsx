@@ -7,9 +7,9 @@ import {
   TableRow,
   Paper,
   useTheme,
-} from "@mui/material";
+} from '@mui/material';
 
-import { Pizza } from "../../types";
+import { Pizza } from '../../types';
 
 interface PizzaMenuProps {
   pizzas: Pizza[];
@@ -21,16 +21,16 @@ const PizzaMenu = ({ pizzas }: PizzaMenuProps) => {
       <Table
         sx={{
           minWidth: 500,
-          "& .MuiTableCell-head": {
+          '& .MuiTableCell-head': {
             backgroundColor: theme.palette.primary.dark,
             color: theme.palette.primary.contrastText,
-            fontWeight: "bold",
+            fontWeight: 'bold',
           },
-          "& .MuiTableCell-body": {
+          '& .MuiTableCell-body': {
             backgroundColor: theme.palette.primary.light,
-            color: "white",
+            color: 'white',
           },
-          "& .MuiTableCell-root": {
+          '& .MuiTableCell-root': {
             border: `1px solid ${theme.palette.secondary.main} `,
           },
         }}

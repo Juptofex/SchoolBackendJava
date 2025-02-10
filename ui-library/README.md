@@ -1,6 +1,9 @@
 # Gestion de l'état plus avancée
-## Gestion de l'état associé à un formulaire  
-### Introduction 
+
+## Gestion de l'état associé à un formulaire
+
+### Introduction
+
 Il y a beaucoup d'applications web où nous allons souhaiter gérer un formulaire.
 
 En React, pour afficher ce qui est visible dans un formulaire, nous allons devoir jouer avec l'état de l'application.
@@ -8,6 +11,7 @@ En React, pour afficher ce qui est visible dans un formulaire, nous allons devoi
 Pour ce tutoriel, veuillez créer une copie du tutoriel `start-state` et l'appeler `medium-state`. Changez le nom du projet dans `package.json` en `medium-state`.
 
 ### Formulaire non contrôllé par React
+
 Dans le composant `Main` (`/src/components/Main/index.tsx`), à la suite de PizzaMenu,
 nous allons ajouter un formulaire :
 
@@ -64,14 +68,16 @@ Parfois on préfère utiliser **`e.currentTarget`** qui est l'élément HTML sur
 Dans le code ci-dessus, on utilise l'objet **`event`** pour stopper l'action par défaut d'un formulaire qui est d'envoyer les données au serveur (indiqué par la propriété **`action`** du formulaire) et de recharger la page.
 
 Veuillez faire ces tests :
+
 - Exécutez l'application et vérifiez que tout fonctionne.
 - Veuillez maintenant commenter :
+
 ```ts
- const handleSubmit = (e: SyntheticEvent) => {
-    // e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    console.log("submit:", form.pizza.value, form.description.value);
-  };
+const handleSubmit = (e: SyntheticEvent) => {
+  // e.preventDefault();
+  const form = e.target as HTMLFormElement;
+  console.log('submit:', form.pizza.value, form.description.value);
+};
 ```
 
 Qu'est-ce qui se passe ?  
@@ -84,6 +90,7 @@ Actuellement, ce formulaire n'est pas controllé par React. Nous avons accès à
 Il est recommandé d'utiliser des composants controllés par React. Les valeurs des inputs doivent être contrôlées par React à travers un état, et les changements seront gérés via les gestionnaires d'événements (`onChange` pour les inputs).
 
 Comme nous avons deux formulaires ici, nous allons créer deux variables d'états et les mettre à jour dans leur gestionnaire d'événements associé :
+
 ```tsx
 const Main = () => {
   const [pizza, setPizza] = useState("");
@@ -143,12 +150,13 @@ const Main = () => {
 ```
 
 Nous voyons maintenant que :
+
 - chaque valeur d'une input est controllée par une variable d'état qui est mise à jour à chaque changement opéré (dans l'input)
 - que grâce à l'event objet, nous avons accès à la valeur de chaque input via `e.target.value`. Néanmoins, comme TS est typé, nous devons d'abord "caster" `e.target` vers un `HTMLInputElement` afin d'avoir accès à `value`.
 
 Veuillez executez l'application, ouvrir la console, et observer ce qui se passe quand vous écrivez dans les inputs, ainsi que lorsque vous cliquez sur le bouton submit.
 
-Ca y est, nous avons appris comment maîtriser les formulaires en Flutter. 
+Ca y est, nous avons appris comment maîtriser les formulaires en Flutter.
 
 Il nous reste maintenant à voir comment utiliser les données du formulaire au sein d'une collection de données qui va permettre de mettre à jour nos écrans.
 
@@ -157,6 +165,7 @@ Il nous reste maintenant à voir comment utiliser les données du formulaire au 
 Très souvent, c'est une collection de données qui sera utilisée comme état de l'application.
 
 Par exemple, dans notre tutoriel, nous souhaiterions qu'une collection de pizzas permette :
+
 - d'afficher toutes les pizzas du menu ;
 - d'ajouter automatiquement une nouvelle pizzas au menu après soumission des données du formulaire.
 
@@ -167,7 +176,7 @@ Actuellement, la collection de `Pizza` est gérée dans le composant `PizzaMenu`
 Nous allons donc mettre à jour `PizzaMenu` pour qu'il reçoive dans ses props la collection de pizza. Voici `PizzaMenu` mis à jour :
 
 ```tsx
-import "./PizzaMenu.css";
+import './PizzaMenu.css';
 
 interface PizzaMenuProps {
   pizzas: Pizza[];
@@ -207,6 +216,7 @@ export type { Pizza };
 Pour simplifier le développement, nous vous conseillons d'enlever l'autoPlay pour l'audio... Ca fera moins de bruit ; )
 
 Voici la mise à jour du composant `Main` afin de passer une variable d'état initialisée par les pizzas par défaut du menu :
+
 ```tsx
 const defaultPizzas = [
   {
@@ -280,13 +290,14 @@ Nous allons maintenant faire en sorte que lors du submit, on mette à jour la va
 
 En React, nous ne devons jamais mettre à jour l'état directement.
 Lors du submit, nous pourrions être tenté de faire qqch du genre :
+
 ```ts
 const newPizza = {
-      id: nextPizzaId(pizzas),
-      title: pizza,
-      content: description,
-    };
-pizzas.push(newPizza);  
+  id: nextPizzaId(pizzas),
+  title: pizza,
+  content: description,
+};
+pizzas.push(newPizza);
 setPizzas(pizzas);
 ```
 
@@ -296,80 +307,82 @@ Néanmoins, vous risquez d'avoir des soucis de debugging (vous ne pouvez pas sui
 👍 Retenez qu'en React, l'état est **immuable**. Si vous souhaitez le changer, vous devez chaque fois passer un nouvel objet à votre fonction mettant à jour l'état.
 
 Par exemple, pour mettre à jour un array, vous avez deux options. Soit vous utilisez la fonction `concat` qui crée un nouvel array, ajoute l'élément, et renvoie le nouvel array :
+
 ```ts
 setPizzas(pizzas.concat(newPizza));
 ```
 
 Soit vous utilisez le spread operator pour créer un nouvel array contenant tous les éléments de pizzas, en y ajoutant le dernier élément :
+
 ```ts
 setPizzas([...pizzas, newPizza]);
 ```
 
-Voici le code final du  `Main` dans lequel nous avons ajouté une fonction toute à la fin permettant de générer un identifiant :
-```tsx
-import {  SyntheticEvent, useState } from "react";
-import sound from "../../assets/sounds/Infecticide-11-Pizza-Spinoza.mp3";
-import DrinkCard from "./DrinkCard";
-import DrinkMenu from "./DrinkMenu";
-import "./Main.css";
-import PizzaMenu from "./PizzaMenu";
-import { Pizza } from "./PizzaMenu";
+Voici le code final du `Main` dans lequel nous avons ajouté une fonction toute à la fin permettant de générer un identifiant :
 
+```tsx
+import { SyntheticEvent, useState } from 'react';
+import sound from '../../assets/sounds/Infecticide-11-Pizza-Spinoza.mp3';
+import DrinkCard from './DrinkCard';
+import DrinkMenu from './DrinkMenu';
+import './Main.css';
+import PizzaMenu from './PizzaMenu';
+import { Pizza } from './PizzaMenu';
 
 const defaultPizzas = [
   {
     id: 1,
-    title: "4 fromages",
-    content: "Gruyère, Sérac, Appenzel, Gorgonzola, Tomates",
+    title: '4 fromages',
+    content: 'Gruyère, Sérac, Appenzel, Gorgonzola, Tomates',
   },
   {
     id: 2,
-    title: "Vegan",
-    content: "Tomates, Courgettes, Oignons, Aubergines, Poivrons",
+    title: 'Vegan',
+    content: 'Tomates, Courgettes, Oignons, Aubergines, Poivrons',
   },
   {
     id: 3,
-    title: "Vegetarian",
-    content: "Mozarella, Tomates, Oignons, Poivrons, Champignons, Olives",
+    title: 'Vegetarian',
+    content: 'Mozarella, Tomates, Oignons, Poivrons, Champignons, Olives',
   },
   {
     id: 4,
-    title: "Alpage",
-    content: "Gruyère, Mozarella, Lardons, Tomates",
+    title: 'Alpage',
+    content: 'Gruyère, Mozarella, Lardons, Tomates',
   },
   {
     id: 5,
-    title: "Diable",
-    content: "Tomates, Mozarella, Chorizo piquant, Jalapenos",
+    title: 'Diable',
+    content: 'Tomates, Mozarella, Chorizo piquant, Jalapenos',
   },
-] ;
+];
 
 const Main = () => {
-  const [pizza, setPizza] = useState("");
-  const [description, setDescription] = useState("");
+  const [pizza, setPizza] = useState('');
+  const [description, setDescription] = useState('');
   const [pizzas, setPizzas] = useState(defaultPizzas);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log("submit:", pizza, description);
+    console.log('submit:', pizza, description);
     const newPizza = {
       id: nextPizzaId(pizzas),
       title: pizza,
       content: description,
     };
-    
+
     setPizzas([...pizzas, newPizza]);
   };
 
   const handlePizzaChange = (e: SyntheticEvent) => {
     const pizzaInput = e.target as HTMLInputElement;
-    console.log("change in pizzaInput:", pizzaInput.value);
+    console.log('change in pizzaInput:', pizzaInput.value);
     setPizza(pizzaInput.value);
   };
 
   const handleDescriptionChange = (e: SyntheticEvent) => {
     const descriptionInput = e.target as HTMLInputElement;
-    console.log("change in descriptionInput:", descriptionInput.value);
+    console.log('change in descriptionInput:', descriptionInput.value);
     setDescription(descriptionInput.value);
   };
 
@@ -380,7 +393,7 @@ const Main = () => {
         Because we love JS, you can also click on the header to stop / start the
         music ; )
       </p>
-      <audio id="audioPlayer" controls >
+      <audio id="audioPlayer" controls>
         <source src={sound} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
@@ -447,10 +460,11 @@ const nextPizzaId = (pizzas: Pizza[]) => {
 export default Main;
 ```
 
-Notons que la fonction `reduce` est très intéressante : 
+Notons que la fonction `reduce` est très intéressante :
+
 - c'est de la programmation fonctionnelle, `reduce` reçoit une fonction en paramètre (on appelle ça une callback)
 - elle permet d'itérer sur tous les éléments d'une collection, en appelant la callback sur chaque élément de la collection ; chaque élément est reçu dans le deuxième argument de la callback appelé `pizza` ici ;
-- à chaque appel de la callback, le résultat de l'itération prédédente est récupéré dans le 1er argument de la callback appelé `maxId` ici ; 
+- à chaque appel de la callback, le résultat de l'itération prédédente est récupéré dans le 1er argument de la callback appelé `maxId` ici ;
 - à la 1ère itération, on considère la valeur `0` comme valeur précédente ; c'est d'ailleurs la valeur `0` qui serait renvoyée s'il n'y a pas d'éléments dans la collection.
 
 ## Exercice : Gestion d'une collection pour l'état (ex8)
@@ -458,15 +472,18 @@ Notons que la fonction `reduce` est très intéressante :
 Veuillez créer un nouveau projet en utilisant les technos Vite + React + TS + SWC nommé `/exercises/XY` dans votre git repo.
 
 Veuillez créer une nouvelle application qui vous permette, dans la même page :
+
 - d'afficher 5 de vos films préférés.
 - d'ajouter un film via un formulaire.
 
 Un film devra avoir :
-- un titre 
+
+- un titre
 - un director
 - une durée en minutes
 
 Un film pourra avoir :
+
 - un lien vers une image
 - une description
 - un budget (en million).
@@ -474,21 +491,23 @@ Un film pourra avoir :
 Une fois tout fonctionel, veuillez faire un commit avec le message suivant : "new:exXY"
 
 ## Gestion d'un état partagé par plusieurs composants
+
 Quand un état est partagé par plusieurs composants, la gestion se complique parfois un peu.
 
 Pour notre tutoriel, afin de bien structurer notre code, nous allons créer un nouveau composant `AddPizza` dans `/src/components/Main/AddPizza.tsx` :
-```tsx
-import { useState, SyntheticEvent } from "react";
 
-import { Pizza } from "./PizzaMenu";
+```tsx
+import { useState, SyntheticEvent } from 'react';
+
+import { Pizza } from './PizzaMenu';
 
 interface AddPizzaProps {
   addPizza: (pizza: Pizza) => void;
 }
 
 const AddPizza = ({ addPizza }: AddPizzaProps) => {
-  const [pizza, setPizza] = useState("");
-  const [description, setDescription] = useState("");
+  const [pizza, setPizza] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -497,13 +516,13 @@ const AddPizza = ({ addPizza }: AddPizzaProps) => {
 
   const handlePizzaChange = (e: SyntheticEvent) => {
     const pizzaInput = e.target as HTMLInputElement;
-    console.log("change in pizzaInput:", pizzaInput.value);
+    console.log('change in pizzaInput:', pizzaInput.value);
     setPizza(pizzaInput.value);
   };
 
   const handleDescriptionChange = (e: SyntheticEvent) => {
     const descriptionInput = e.target as HTMLInputElement;
-    console.log("change in descriptionInput:", descriptionInput.value);
+    console.log('change in descriptionInput:', descriptionInput.value);
     setDescription(descriptionInput.value);
   };
 
@@ -535,62 +554,59 @@ const AddPizza = ({ addPizza }: AddPizzaProps) => {
 export default AddPizza;
 ```
 
-Ce composant reçoit de son parent la callback qui permet de mettre à jour l'état géré par le parent ! 
+Ce composant reçoit de son parent la callback qui permet de mettre à jour l'état géré par le parent !
 
 💭 Nous pouvons maintenant bien assimiler comment un composant "enfant" peut renvoyer de l'information à son parent. C'est via la callback que l'enfant reçoit, lorsqu'il l'appelle, qu'il passera en paramètre ses données. Ici, l'enfant passe comme info au parent une nouvelle pizza : `addPizza({ id: -1, title: pizza, content: description });`
 
 Il est à noter que comme l'enfant n'a pas accès à tous les identifiants de pizza, il va mettre un id temporaire qui devra être remplacé par le parent.
 
 Ainsi, le composant `Main` est simplifié en faisant appel à `AddPizza` :
-```tsx
-import {  useState } from "react";
-import sound from "../../assets/sounds/Infecticide-11-Pizza-Spinoza.mp3";
-import DrinkCard from "./DrinkCard";
-import DrinkMenu from "./DrinkMenu";
-import "./Main.css";
-import PizzaMenu from "./PizzaMenu";
-import { Pizza } from "./PizzaMenu";
-import AddPizza from "./AddPizza";
 
+```tsx
+import { useState } from 'react';
+import sound from '../../assets/sounds/Infecticide-11-Pizza-Spinoza.mp3';
+import DrinkCard from './DrinkCard';
+import DrinkMenu from './DrinkMenu';
+import './Main.css';
+import PizzaMenu from './PizzaMenu';
+import { Pizza } from './PizzaMenu';
+import AddPizza from './AddPizza';
 
 const defaultPizzas = [
   {
     id: 1,
-    title: "4 fromages",
-    content: "Gruyère, Sérac, Appenzel, Gorgonzola, Tomates",
+    title: '4 fromages',
+    content: 'Gruyère, Sérac, Appenzel, Gorgonzola, Tomates',
   },
   {
     id: 2,
-    title: "Vegan",
-    content: "Tomates, Courgettes, Oignons, Aubergines, Poivrons",
+    title: 'Vegan',
+    content: 'Tomates, Courgettes, Oignons, Aubergines, Poivrons',
   },
   {
     id: 3,
-    title: "Vegetarian",
-    content: "Mozarella, Tomates, Oignons, Poivrons, Champignons, Olives",
+    title: 'Vegetarian',
+    content: 'Mozarella, Tomates, Oignons, Poivrons, Champignons, Olives',
   },
   {
     id: 4,
-    title: "Alpage",
-    content: "Gruyère, Mozarella, Lardons, Tomates",
+    title: 'Alpage',
+    content: 'Gruyère, Mozarella, Lardons, Tomates',
   },
   {
     id: 5,
-    title: "Diable",
-    content: "Tomates, Mozarella, Chorizo piquant, Jalapenos",
+    title: 'Diable',
+    content: 'Tomates, Mozarella, Chorizo piquant, Jalapenos',
   },
-] ;
+];
 
 const Main = () => {
-
   const [pizzas, setPizzas] = useState(defaultPizzas);
 
-
-  const addPizza = (newPizza:Pizza) => {   
-    newPizza.id = nextPizzaId(pizzas); 
+  const addPizza = (newPizza: Pizza) => {
+    newPizza.id = nextPizzaId(pizzas);
     setPizzas([...pizzas, newPizza]);
   };
-
 
   return (
     <main>
@@ -599,7 +615,7 @@ const Main = () => {
         Because we love JS, you can also click on the header to stop / start the
         music ; )
       </p>
-      <audio id="audioPlayer" controls >
+      <audio id="audioPlayer" controls>
         <source src={sound} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
@@ -645,11 +661,12 @@ export default Main;
 ```
 
 ## Résumé des choses importantes
-💭 Vous devriez à présent avoir les réponses à ces questions : 
+
+💭 Vous devriez à présent avoir les réponses à ces questions :
+
 - Comment passer de l'info d'un parent vers ses enfants ?
 - Comment passer de l'info d'un enfant vers un ancêtre ?
 - Comment passer de l'info d'un sibling (frère ou soeur) vers un autre sibling ?
-
 
 ## 🍬 Challenge optionnel ? : gestion d'un état partagé (ex9)
 
@@ -660,6 +677,7 @@ Vous avez remarqué que dans le composant `Main`, il est écrit : "Because we lo
 Nous vous demandons de remplir cette mission. A l'aide de JS/TS, veuillez faire en sorte que l'on puisse cliquer sur le Header et que cela démarre ou stop la musique de l'élément `<audio>` présent dans le main.
 
 🤝 Tips :
+
 - Utilisation du Hook `useRef` pour obtenir une référence directe et persistante à l'élément `<audio>`, qui peut être mutée, ce qui permet d'interagir avec cet élément DOM de manière impérative, par exemple pour appeler la méthode `play` ou `pause`. L'avantage de cette méthode c'est qu'elle ne provoque pas de re-render du composant quand il est mis à jour (à l'inverse de si l'on faisait de la programmation old-school avec `document.getElementById` pour récupérer une référence à `<audio>`).
 - Utilisation à du Hook `useEffect` pour réaliser une action à chaque fois que l'on a une action à réaliser parce qu'il y aurait eu un clic dans le Header. Dans ce cas-ci, il faudrait bien comprendre le `useEffect` pour l'associer au changement d'une variable d'état (qui représente s'il y a besoin d'une action à faire à cause d'un clic dans le header).
 
