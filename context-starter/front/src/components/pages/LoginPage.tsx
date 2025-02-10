@@ -1,10 +1,11 @@
-import { useState, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent, useContext } from 'react';
 import './index.css';
-import { useNavigate, useOutletContext } from 'react-router-dom';
-import { PizzeriaContext } from '../../types';
+import { useNavigate } from 'react-router-dom';
+import { UserContextType } from '../../types';
+import { UserContext } from '../../contexts/UserContext';
 
 const LoginPage = () => {
-  const { loginUser }: PizzeriaContext = useOutletContext();
+  const { loginUser }: UserContextType = useContext(UserContext);
 
   const navigate = useNavigate();
   const [username, setUsername] = useState('');

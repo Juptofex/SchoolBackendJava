@@ -21,8 +21,13 @@ interface PizzeriaContext {
   clearActionToBePerformed: () => void;
   drinks: Drink[];
   addPizza: (newPizza: NewPizza) => Promise<void>;
+}
+
+interface UserContextType {
+  authenticatedUser: MaybeAuthenticatedUser;
   registerUser: (newUser: User) => Promise<void>;
   loginUser: (user: User) => Promise<void>;
+  clearUser: () => void;
 }
 
 interface User {
@@ -45,4 +50,5 @@ export type {
   User,
   AuthenticatedUser,
   MaybeAuthenticatedUser,
+  UserContextType,
 };

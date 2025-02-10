@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import { MaybeAuthenticatedUser } from '../../types';
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext';
+import { UserContextType } from '../../types';
 
-interface NavBarProps {
-  authenticatedUser: MaybeAuthenticatedUser;
-  clearUser: () => void;
-}
-
-const NavBar = ({ authenticatedUser, clearUser }: NavBarProps) => {
+const NavBar = () => {
+  const { authenticatedUser, clearUser } =
+    useContext<UserContextType>(UserContext);
   const navigate = useNavigate();
 
   if (authenticatedUser) {
@@ -18,6 +17,7 @@ const NavBar = ({ authenticatedUser, clearUser }: NavBarProps) => {
           Ajouter une pizza
         </button>
         <button onClick={() => clearUser()}>Se déconnecter</button>
+        <p>Hello dear {authenticatedUser.username}</p>
       </nav>
     );
   }

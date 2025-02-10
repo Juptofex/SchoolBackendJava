@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import './App.css';
 import Footer from '../Footer';
@@ -6,18 +6,13 @@ import Header from '../Header';
 import {
   Drink,
   NewPizza,
-  User,
   Pizza,
   PizzeriaContext,
-  AuthenticatedUser,
-  MaybeAuthenticatedUser,
+  UserContextType,
 } from '../../types';
 import NavBar from '../Navbar';
-import {
-  clearAuthenticatedUser,
-  getAuthenticatedUser,
-  storeAuthenticatedUser,
-} from '../../utils/session';
+
+import { UserContext } from '../../contexts/UserContext';
 
 const drinks: Drink[] = [
   {
@@ -46,8 +41,7 @@ const drinks: Drink[] = [
 const App = () => {
   const [actionToBePerformed, setActionToBePerformed] = useState(false);
   const [pizzas, setPizzas] = useState<Pizza[]>([]);
-  const [authenticatedUser, setAuthenticatedUser] =
-    useState<MaybeAuthenticatedUser>(undefined);
+  const { authenticatedUser } = useContext<UserContextType>(UserContext);
 
   const fetchPizzas = useCallback(async () => {
     try {
@@ -60,10 +54,6 @@ const App = () => {
 
   useEffect(() => {
     fetchPizzas();
-    const authenticatedUser = getAuthenticatedUser();
-    if (authenticatedUser) {
-      setAuthenticatedUser(authenticatedUser);
-    }
   }, [fetchPizzas]);
 
   async function getAllPizzas() {
@@ -113,68 +103,6 @@ const App = () => {
     }
   };
 
-  const registerUser = async (newUser: User) => {
-    try {
-      const options = {
-        method: 'POST',
-        body: JSON.stringify(newUser),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const response = await fetch('/api/auths/register', options);
-
-      if (!response.ok)
-        throw new Error(
-          `fetch error : ${response.status} : ${response.statusText}`,
-        );
-
-      const createdUser: AuthenticatedUser = await response.json();
-
-      setAuthenticatedUser(createdUser);
-      storeAuthenticatedUser(createdUser);
-
-      console.log('createdUser: ', createdUser);
-    } catch (err) {
-      console.error('registerUser::error: ', err);
-      throw err;
-    }
-  };
-
-  const loginUser = async (user: User) => {
-    try {
-      const options = {
-        method: 'POST',
-        body: JSON.stringify(user),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const response = await fetch('/api/auths/login', options);
-
-      if (!response.ok)
-        throw new Error(
-          `fetch error : ${response.status} : ${response.statusText}`,
-        );
-
-      const authenticatedUser: AuthenticatedUser = await response.json();
-      console.log('authenticatedUser: ', authenticatedUser);
-
-      setAuthenticatedUser(authenticatedUser);
-      storeAuthenticatedUser(authenticatedUser);
-    } catch (err) {
-      console.error('loginUser::error: ', err);
-      throw err;
-    }
-  };
-
-  const clearUser = () => {
-    clearAuthenticatedUser();
-    setAuthenticatedUser(undefined);
-  };
-
   const handleHeaderClick = () => {
     setActionToBePerformed(true);
   };
@@ -191,8 +119,6 @@ const App = () => {
     setActionToBePerformed,
     clearActionToBePerformed,
     drinks,
-    registerUser,
-    loginUser,
   };
 
   return (
@@ -203,7 +129,7 @@ const App = () => {
         handleHeaderClick={handleHeaderClick}
       />
       <main>
-        <NavBar authenticatedUser={authenticatedUser} clearUser={clearUser} />
+        <NavBar />
         <Outlet context={fullPizzaContext} />
       </main>
       <Footer />
