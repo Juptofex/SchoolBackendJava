@@ -56,5 +56,11 @@ public class Drink {
         this.alcoholic = alcoholic;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
