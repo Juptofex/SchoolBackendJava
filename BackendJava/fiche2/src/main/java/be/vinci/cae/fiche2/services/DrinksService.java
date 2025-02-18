@@ -30,4 +30,8 @@ public class DrinksService {
     public void deleteDrink(long id) {
         drinksRepository.deleteById(id);
     }
+
+    public Drink updateDrink(Drink drink) {
+        return drinksRepository.save(drink);
+    }
 }
